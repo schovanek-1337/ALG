@@ -7,83 +7,127 @@ import java.util.ArrayList;
  * @author janvit
  */
 public class NShape {
-    //data
-    private ArrayList<Point> points = new ArrayList<>();
+	//data
 
-    //constructors
-    //default prazdny konstruktor
-    public NShape(){
+	private ArrayList<Point> points = new ArrayList<>();
 
-    }
+	//constructors
+	//default prazdny konstruktor
+	public NShape() {
 
-    //TODO
-    public NShape (Point[] points){
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	}
 
-    //TODO
-    public NShape (ArrayList<Point> points){
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	public NShape(Point[] points) {
+		for (Point p : points) {
+			this.points.add(p);
+		}
+	}
 
-    public void add(Point p){
-        points.add(p);
-    }
+	public NShape(ArrayList<Point> points) {
+		this.points.addAll(points);
+	}
 
-    public void add(double x, double y){
-        points.add(new Point(x, y));
-    }
+	public void add(Point p) {
+		points.add(p);
+	}
 
-    //TODO vyuzit prochazeni ArrayListu po indexech
-    public double perim(){
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	public void add(double x, double y) {
+		points.add(new Point(x, y));
+	}
 
-    public Point getPointAt(int index){
-        return points.get(index);
-    }
+	public double perim() {
+		double result = 0;
+		for (int i = 0; i < points.size() - 1; i++) {
+			result += points.get(i).distanceTo(points.get(i + 1));
+		}
+		result += points.get(0).distanceTo(points.get(points.size()));
+		return result;
+	}
 
-    public Point getNearest(){
-        double min = Double.MAX_VALUE;
-        Point nearest = null; //inicializace objektu
-        double distance;
-        for (Point point : points) { //prechadzanie ArrayListu pomocou foreach
-            distance = point.getDistance();
-            if(distance < min){
-                min = distance;
-                nearest = point;
-            }
-        }
-        return nearest;
-    }
+	public Point getPointAt(int index) {
+		return points.get(index);
+	}
 
-    public Point getFurthest(){
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	public Point getNearest() {
+		double min = Double.MAX_VALUE;
+		Point nearest = null; //inicializace objektu
+		double distance;
+		for (Point point : points) { //prechadzanie ArrayListu pomocou foreach
+			distance = point.getDistance();
+			if (distance < min) {
+				min = distance;
+				nearest = point;
+			}
+		}
+		return nearest;
+	}
 
-    //TODO vrati min vzdalenost mezi body
-    public double minDistanceBetween(){
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	public Point getFurthest() {
+		Point winner = points.get(0);
+		for (Point p : points) {
+			if (winner.getDistance() < p.getDistance()) {
+				winner = p;
+			}
+		}
+		return winner;
+	}
 
-    //TODO vrati max vzdalenost mezi body
-    public double maxDistanceBetween(){
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	public double minDistanceBetween() {
+		int i = 0;
+		int j = 1;
+		double distance = 0;
+		double currDistance; //syntax sugar
+		while (i < points.size()) {
+			currDistance = points.get(i).distanceTo(points.get(j));
+			if (distance > currDistance) {
+				distance = currDistance;
+			}
+			if (j < points.size() - 1) {
+				j++;
+			} else {
+				i++;
+				j = i;
+			}
+		}
+		return distance;
+	}
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Point point : points) {
-            sb.append(point.toString()).append("\n");
-        }
-        return sb.toString();
-    }
+	public double maxDistanceBetween() {
+		int i = 0;
+		int j = 1;
+		double distance = 0;
+		double currDistance; //syntax sugar
+		while (i < points.size()) {
+			currDistance = points.get(i).distanceTo(points.get(j));
+			if (distance < currDistance) {
+				distance = currDistance;
+			}
+			if (j < points.size() - 1) {
+				j++;
+			} else {
+				i++;
+				j = i;
+			}
+		}
+		return distance;
+	}
 
-    public static void main(String[] args) {
-        NShape myShape = new NShape();
-        myShape.add(new Point(2, 3));
-        myShape.add(2, 4);
-        System.out.println(myShape.getNearest());
-    }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (Point point : points) {
+			sb.append(point.toString()).append("\n");
+		}
+		return sb.toString();
+	}
+
+	public static void main(String[] args) {
+		NShape myShape = new NShape();
+		myShape.add(new Point(2, 3));
+		myShape.add(2, 4);
+		myShape.add(6, 8);
+		myShape.add(11, 34);
+		myShape.add(129, 22);
+		System.out.println(myShape.minDistanceBetween());
+	}
 }
