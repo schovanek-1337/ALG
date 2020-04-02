@@ -75,7 +75,7 @@ public class NShape {
 	public double minDistanceBetween() {
 		int i = 0;
 		int j = 1;
-		double distance = 0;
+		double distance = Double.MAX_VALUE;
 		double currDistance; //syntax sugar
 		while (i < points.size()) {
 			currDistance = points.get(i).distanceTo(points.get(j));
