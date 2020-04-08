@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author plesio
+ * @author vit.schovanek
  */
 public class Person extends Client {
 	

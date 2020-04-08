@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author plesio
+ * @author vit.schovanek
  */
 public abstract class Client {
 	

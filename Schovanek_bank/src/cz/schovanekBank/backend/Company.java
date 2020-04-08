@@ -7,7 +7,7 @@ package cz.schovanekBank.backend;
 
 /**
  *
- * @author plesio
+ * @author vit.schovanek
  */
 public class Company extends Client {
 
